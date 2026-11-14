@@ -53,6 +53,42 @@ class WorkbenchProvider with ChangeNotifier {
             'Shoes': 'Shoes_Boy_Image2.png',
           },
         ),
+        AssembledAvatar(
+          id: 'kit_preset_3',
+          name: 'Vortex Runner #03',
+          createdAt: DateTime.now().subtract(const Duration(hours: 11)),
+          gender: 'Boy',
+          backdrop: '2',
+          selectedLayers: {
+            'Body': 'Body_Boy_Image3.png',
+            'Eyes': 'Eyes_Boy_Image3.png',
+            'Brows': 'Brows_Boy_Image3.png',
+            'Mouth': 'Mouth_Boy_Image3.png',
+            'Hair': 'Hair_Boy_Image3.png',
+            'Top': 'Top_Boy_Image3.png',
+            'Bottom': 'Bottom_Boy_Image3.png',
+            'Shoes': 'Shoes_Boy_Image3.png',
+            'Accessories': 'Accessories_Boy_Image3.png',
+          },
+        ),
+        AssembledAvatar(
+          id: 'kit_preset_4',
+          name: 'Starlight DJ #04',
+          createdAt: DateTime.now().subtract(const Duration(days: 1)),
+          gender: 'Boy',
+          backdrop: '3',
+          selectedLayers: {
+            'Body': 'Body_Boy_Image4.png',
+            'Eyes': 'Eyes_Boy_Image4.png',
+            'Brows': 'Brows_Boy_Image4.png',
+            'Mouth': 'Mouth_Boy_Image4.png',
+            'Hair': 'Hair_Boy_Image4.png',
+            'Top': 'Top_Boy_Image4.png',
+            'Bottom': 'Bottom_Boy_Image4.png',
+            'Shoes': 'Shoes_Boy_Image4.png',
+            'Accessories': 'Accessories_Boy_Image1.png',
+          },
+        ),
       ];
     }
     _isLoading = false;

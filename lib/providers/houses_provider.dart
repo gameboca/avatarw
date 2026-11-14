@@ -64,10 +64,11 @@ class HousesProvider with ChangeNotifier {
 
     final Set<String> favs = StorageService.instance.getFavorites();
     final List<String> cats = [];
-    final List<HouseItem> items = [];
+    final List<List<HouseItem>> byCategory = [];
 
     categoryMap.forEach((categoryName, group) {
       cats.add(categoryName);
+      final List<HouseItem> catItems = [];
       if (group is Map<String, dynamic>) {
         int index = 0;
         group.forEach((_, itemJson) {
@@ -75,11 +76,26 @@ class HousesProvider with ChangeNotifier {
             final house =
                 HouseItem.fromJson(itemJson, categoryName, index++);
             house.isFavorite = favs.contains(house.id);
-            items.add(house);
+            catItems.add(house);
           }
         });
       }
+      byCategory.add(catItems);
     });
+
+    // Interleave across categories so 'All' starts with the cached top items from every category
+    final List<HouseItem> items = [];
+    int maxLen = 0;
+    for (final list in byCategory) {
+      if (list.length > maxLen) maxLen = list.length;
+    }
+    for (int i = 0; i < maxLen; i++) {
+      for (final list in byCategory) {
+        if (i < list.length) {
+          items.add(list[i]);
+        }
+      }
+    }
 
     _categories = cats;
     _allHouses = items;

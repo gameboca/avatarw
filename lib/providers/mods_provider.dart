@@ -66,21 +66,37 @@ class ModsProvider with ChangeNotifier {
 
     final Set<String> favs = StorageService.instance.getFavorites();
     final List<String> cats = [];
-    final List<ModItem> items = [];
+    final List<List<ModItem>> byCategory = [];
 
     categoryMap.forEach((categoryName, group) {
       cats.add(categoryName);
+      final List<ModItem> catItems = [];
       if (group is Map<String, dynamic>) {
         int index = 0;
         group.forEach((_, itemJson) {
           if (itemJson is Map<String, dynamic>) {
             final mod = ModItem.fromJson(itemJson, categoryName, index++);
             mod.isFavorite = favs.contains(mod.id);
-            items.add(mod);
+            catItems.add(mod);
           }
         });
       }
+      byCategory.add(catItems);
     });
+
+    // Interleave across categories so 'All' starts with the cached top items from every category
+    final List<ModItem> items = [];
+    int maxLen = 0;
+    for (final list in byCategory) {
+      if (list.length > maxLen) maxLen = list.length;
+    }
+    for (int i = 0; i < maxLen; i++) {
+      for (final list in byCategory) {
+        if (i < list.length) {
+          items.add(list[i]);
+        }
+      }
+    }
 
     _categories = cats;
     _allMods = items;
